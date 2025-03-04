@@ -7,15 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Github,
-  Linkedin,
-  Twitter,
-  Send,
-} from "lucide-react";
+import { supabase } from "@/lib/supabaseClient"; // Import Supabase client
+import { Mail, Phone, MapPin, Send } from "lucide-react";
 
 export function ContactSection() {
   const { toast } = useToast();
@@ -34,46 +27,37 @@ export function ContactSection() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    // Insert data into Supabase
+    const { error } = await supabase
+      .from("portfolio_contact_messages")
+      .insert([formData]);
+
+    if (error) {
+      toast({
+        title: "Error sending message",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } else {
       toast({
         title: "Message sent!",
         description: "Thank you for your message. I'll get back to you soon.",
       });
+
       setFormData({
         name: "",
         email: "",
         subject: "",
         message: "",
       });
-      setIsSubmitting(false);
-    }, 1500);
-  };
+    }
 
-  const contactInfo = [
-    {
-      icon: <Mail className="h-5 w-5" />,
-      title: "Email",
-      value: "jkq.lee@gmail.com",
-      link: "mailto:jkq.lee@gmail.com",
-    },
-    {
-      icon: <Phone className="h-5 w-5" />,
-      title: "Phone",
-      value: "+447519707515",
-      link: "tel:+447519707515",
-    },
-    {
-      icon: <MapPin className="h-5 w-5" />,
-      title: "Location",
-      value: "Church Stretton",
-      link: "https://www.google.com/maps",
-    },
-  ];
+    setIsSubmitting(false);
+  };
 
   return (
     <section id="contact" className="py-20 bg-muted/30">
@@ -107,23 +91,47 @@ export function ContactSection() {
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6 flex items-start space-x-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      {info.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">{info.title}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        <a href={info.link}>{info.value}</a>
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <Card>
+              <CardContent className="p-6 flex items-start space-x-4">
+                <div className="bg-primary/10 p-3 rounded-full">
+                  <Mail className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-1">Email</h4>
+                  <p className="text-sm text-muted-foreground">
+                    <a href="mailto:jkq.lee@gmail.com">jkq.lee@gmail.com</a>
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6 flex items-start space-x-4">
+                <div className="bg-primary/10 p-3 rounded-full">
+                  <Phone className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-1">Phone</h4>
+                  <p className="text-sm text-muted-foreground">
+                    <a href="tel:+447519707515">+447519707515</a>
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6 flex items-start space-x-4">
+                <div className="bg-primary/10 p-3 rounded-full">
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-1">Location</h4>
+                  <p className="text-sm text-muted-foreground">
+                    <a href="https://www.google.com/maps">Church Stretton</a>
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
 
           <motion.div
@@ -167,7 +175,13 @@ export function ContactSection() {
                 required
               />
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" /> Send Message
+                  </>
+                )}
               </Button>
             </form>
           </motion.div>
