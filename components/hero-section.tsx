@@ -118,19 +118,19 @@ export interface Skill {
 }
 
 export class Developer {
-  name: string = "Your Name";
-  title: string = "Full Stack Developer";
-  location: string = "Your Location";
+  name: string = "Jon Lee";
+  title: string = "Junior Software Developer";
+  location: string = "Shropshire";
   
   skills: Skill[] = [
-    { name: "TypeScript", level: 90, yearsOfExperience: 3 },
-    { name: "React", level: 95, yearsOfExperience: 4 },
-    { name: "Next.js", level: 85, yearsOfExperience: 2 },
-    { name: "Node.js", level: 80, yearsOfExperience: 3 },
+    { name: "TypeScript", level: 50, yearsOfExperience: <1 },
+    { name: "React", level: 75, yearsOfExperience: <1 },
+    { name: "Next.js", level: 85, yearsOfExperience: <1 },
+    { name: "Node.js", level: 80, yearsOfExperience: <1 },
   ];
   
   contact(): string {
-    return "hello@yourdomain.com";
+    return "jkq.lee@gmail.com";
   }
   
   get availableForWork(): boolean {
