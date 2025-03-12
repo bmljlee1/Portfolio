@@ -38,7 +38,7 @@ export function ProjectsSection() {
       id: 3,
       title: "Cookie Clicker v2.0",
       description:
-        "A fun little cookie clicker game, inspired by the great OG cookie clicker!.",
+        "A fun little cookie clicker game, inspired by the great OG cookie clicker!",
       image: "/cookie clicker.PNG",
       tags: ["React", "PostgreSQL", "Mapbox", "Prisma"],
       category: "Full Stack",
@@ -48,12 +48,32 @@ export function ProjectsSection() {
     {
       id: 4,
       title: "The Speculation Station",
-      description: "A full-stack application for crime solving enthusiasts!.",
+      description: "A full-stack application for crime solving enthusiasts!",
       image: "/The Speculation Station.PNG",
       tags: ["React", "Vite", "Express", "PostgreSQL"],
       category: "Full Stack",
       github: "https://github.com/bmljlee1/Crime-solver-website",
       demo: "https://week07-project-1.onrender.com/",
+    },
+    {
+      id: 5,
+      title: "Happy Hands",
+      description:
+        "A fun full-stack application for parents assigning tasks to children and reward redemption!",
+      image: "/Happyhands.PNG",
+      tags: [
+        "React",
+        "Vite",
+        "Express",
+        "PostgreSQL",
+        "Supabase Auth",
+        "Chakra-UI",
+        "Sentry",
+        "Vitest",
+      ],
+      category: "Full Stack",
+      github: "https://github.com/bmljlee1/final-project-404-bra",
+      demo: "https://final-project-404-bra.vercel.app/",
     },
   ];
 
